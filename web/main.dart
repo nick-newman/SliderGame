@@ -15,37 +15,41 @@ Future<Null> main() async {
   renderLoop.addStage(stage);
 
   var resourceManager = ResourceManager();
-  resourceManager.addBitmapData("dart", "images/dart@1x.png");
+  resourceManager.addBitmapData("player0", "images/player0.png");
 
   await resourceManager.load();
 
-  var logoData = resourceManager.getBitmapData("dart");
-  var logo = Sprite();
-  logo.addChild(Bitmap(logoData));
+  var playerData = resourceManager.getBitmapData("dart");
+  var player = Sprite();
+  player.addChild(Bitmap(playerData));
 
-  logo.pivotX = logoData.width / 2;
-  logo.pivotY = logoData.height / 2;
+  player.pivotX = playerData.width / 2;
+  player.pivotY = playerData.height / 2;
+
+  /*
 
   // Place it at top center.
-  logo.x = 1280 / 2;
-  logo.y = 0;
+  player.x = 1280 / 2;
+  player.y = 0;
 
-  stage.addChild(logo);
+  stage.addChild(player);
 
   // And let it fall.
-  var tween = stage.juggler.addTween(logo, 3, Transition.easeOutBounce);
+  var tween = stage.juggler.addTween(player, 3, Transition.easeOutBounce);
   tween.animate.y.to(800 / 2);
 
   // Add some interaction on mouse click.
   Tween rotation;
-  logo.onMouseClick.listen((MouseEvent e) {
+  player.onMouseClick.listen((MouseEvent e) {
     // Don't run more rotations at the same time.
     if (rotation != null) return;
-    rotation = stage.juggler.addTween(logo, 0.5, Transition.easeInOutCubic);
+    rotation = stage.juggler.addTween(player, 0.5, Transition.easeInOutCubic);
     rotation.animate.rotation.by(2 * pi);
     rotation.onComplete = () => rotation = null;
   });
-  logo.mouseCursor = MouseCursor.POINTER;
+  player.mouseCursor = MouseCursor.POINTER;
+
+  */
 
   // See more examples:
   // https://github.com/bp74/StageXL_Samples
