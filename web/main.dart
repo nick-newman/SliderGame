@@ -5,7 +5,7 @@ import 'dart:math';
 
 Future<Null> main() async {
   StageOptions options = StageOptions()
-    ..backgroundColor = Color.White
+    ..backgroundColor = Color.Black
     ..renderEngine = RenderEngine.WebGL;
 
   var canvas = html.querySelector('#stage');
@@ -31,5 +31,7 @@ Future<Null> main() async {
   player.y = 0;
 
   stage.addChild(player);
+
+
 
 }
