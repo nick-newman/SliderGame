@@ -62,15 +62,17 @@ Future<Null> main() async {
   stage.addChild(slider);
 
   stage.onMouseClick.listen((e) {
+    if (slider.x == 216) {
     var sliderToRight =
     stage.juggler.addTween(slider, 1.5, Transition.linear);
     sliderToRight.animate.x.to(slider.x+368);
+    } else {
+      slider.x = 216;
+    }
   });
 
-  stage.onMouseRightClick.listen((e) {
-    var sliderStop;
-    stage.juggler.addTween(slider, 0.1, Transition.linear);
-    sliderStop.animate.x.to(slider.x);
+  stage.onKeyDown.listen((e) {
+    
   });
 
 /*
