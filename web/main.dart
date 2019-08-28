@@ -3,7 +3,8 @@ import 'dart:html' as html;
 import 'dart:html';
 import 'package:stagexl/stagexl.dart';
 import 'dart:math';
-import 'package:fishclicker/keyboard.dart';
+import 'package:fishclicker/slider.dart';
+import 'package:fishclicker/player.dart';
 
 Future<Null> main() async {
   StageOptions options = StageOptions()
@@ -12,16 +13,35 @@ Future<Null> main() async {
 
   var canvas = html.querySelector('#stage');
   var stage = Stage(canvas, width: 800, height: 800, options: options);
+  //var stage = new Stage(canvas);
 
   var renderLoop = RenderLoop();
   renderLoop.addStage(stage);
 
-  var resourceManager = ResourceManager();
-  resourceManager.addBitmapData("player0", "images/player0.png");
-  resourceManager.addBitmapData("sliderBackground", "images/sliderBackground.png");
-  resourceManager.addBitmapData("slider0", "images/slider0.png");
+  var player = new Player();
+  player.x = 100;
+  player.y = 100;
+  stage.addChild(player);
 
-  var keyboard = new Keyboard();
+  var slider = new Slider();
+  slider.x = 40;
+  slider.y = 40;
+  stage.addChild(slider);
+
+/*
+  var resourceManager = ResourceManager();
+  resourceManager.addBitmapData("player0", "images/player0@1x.png");
+  resourceManager.addBitmapData("player1", "images/player1@1x.png");
+  resourceManager.addBitmapData("sliderBackground", "images/sliderBackground@1x.png");
+  resourceManager.addBitmapData("slider0", "images/slider0@1x.png");
+  resourceManager.addBitmapData("slider1", "images/slider1@1x.png");
+  resourceManager.addBitmapData("reel0", "images/reel0@1x.png");
+  resourceManager.addBitmapData("reel1", "images/reel1@1x.png");
+  resourceManager.addBitmapData("cast0", "images/cast0@1x.png");
+  resourceManager.addBitmapData("cast1", "images/cast1@1x.png");
+  resourceManager.addBitmapData("sliderTarget0", "images/sliderTarget0@1x.png");
+  resourceManager.addBitmapData("sliderTarget1", "images/sliderTarget1@1x.png");
+  resourceManager.addBitmapData("sliderTarget2", "images/sliderTarget2@1x.png");
 
   await resourceManager.load();
 
@@ -37,43 +57,68 @@ Future<Null> main() async {
   var slider = Sprite();
   slider.addChild(Bitmap(sliderData));
 
+  var actionData = resourceManager.getBitmapData("cast0");
+  var action = Sprite();
+  action.addChild(Bitmap(actionData));
+
+  var sliderTargetData = resourceManager.getBitmapData("sliderTarget0");
+  var sliderTarget = Sprite();
+  sliderTarget.addChild(Bitmap(sliderTargetData));
+
   player.pivotX = playerData.width / 2;
   player.pivotY = playerData.height / 2;
+  sliderBackground.pivotX = sliderBackground.width / 2;
+  sliderBackground.pivotY = sliderBackground.height / 2;
+  slider.pivotX = slider.width / 2;
+  slider.pivotY = slider.height / 2;
+  action.pivotX = action.width / 2;
+  action.pivotY = action.height / 2;
+  sliderTarget.pivotX = sliderTarget.width / 2;
+  sliderTarget.pivotY = sliderTarget.height / 2;
+
+  player.scaleX = 1;
+  player.scaleY = 1;
+  sliderBackground.scaleX = 1;
+  sliderBackground.scaleY = 1;
+  slider.scaleX = 1;
+  slider.scaleY = 1;
+  action.scaleX = 1;
+  action.scaleY = 1;
+  sliderTarget.scaleX = 1;
+  sliderTarget.scaleY = 1;
 
   player.x = 100;
   player.y = 100;
+  sliderBackground.x = 400;
+  sliderBackground.y = 500;
+  action.x = 400;
+  action.y = 620;
 
   stage.addChild(player);
-
-  sliderBackground.pivotX = sliderBackground.width / 2;
-  sliderBackground.pivotY = sliderBackground.width / 2;
-
-  sliderBackground.x = 400;
-  sliderBackground.y = 600;
-
   stage.addChild(sliderBackground);
+  stage.addChild(action);
 
-  slider.pivotX = slider.width / 2;
-  slider.pivotY = slider.height / 2;
+  Tween sliderToRight;
 
-  slider.x = 216;
-  slider.y = 425;
+  action.onMouseClick.listen((MouseEvent e) {
 
-  stage.addChild(slider);
+    if (sliderToRight != null) return;
 
-  stage.onMouseClick.listen((e) {
-    if (slider.x == 216) {
-    var sliderToRight =
-    stage.juggler.addTween(slider, 1.5, Transition.linear);
-    sliderToRight.animate.x.to(slider.x+368);
-    } else {
-      slider.x = 216;
-    }
+    sliderTarget.x = 400;
+    sliderTarget.y = 500;
+    stage.addChild(sliderTarget);
+
+    slider.x = sliderBackground.x - 144 + Random.nextInt(80);
+    slider.y = 500;
+    stage.addChild(slider);
+
+    sliderToRight = stage.juggler.addTween(slider, 1.6, Transition.linear);
+    sliderToRight.animate.x.to(slider.x+369);
+    sliderToRight.onComplete = () => sliderToRight = null;
   });
+  action.mouseCursor = MouseCursor.POINTER;
 
-  stage.onKeyDown.listen((e) {
-    
-  });
+  */
 
 /*
     update(e) {
