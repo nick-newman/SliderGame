@@ -6,13 +6,27 @@ import 'dart:math';
 
 class Slider extends DisplayObjectContainer {
 
+var background;
+var foreground;
+var indicator;
+var indicatorBg;
+var indicatorFg;
+var target;
+
 Slider() {
+
+  this.background = new Sprite();
+  this.foreground = new Sprite();
+  this.indicator = new Sprite();
+  this.indicatorBg = new Sprite();
+  this.indicatorFg = new Sprite();
+  this.target = new Sprite();
 
   var background = BitmapData(400, 50, Color.White);
   var backgroundBitmap = Bitmap(background);
   addChild(backgroundBitmap);
 
-  var foreground = BitmapData(389, 42, Color.Black);
+  var foreground = BitmapData(390, 42, Color.Black);
   var foregroundBitmap = Bitmap(foreground);
   addChild(foregroundBitmap);
 
@@ -57,12 +71,26 @@ Slider() {
 
   Tween indicatorBgSlide, indicatorFgSlide;
 
-  html.window.onKeyUp.listen((e) {
+  html.window.onKeyPress.listen((e) {
+
     if (e.key == 'c') {
-    indicatorBgSlide = stage.juggler.addTween(indicatorBgBitmap, 1.6, Transition.linear);
-    indicatorFgSlide = stage.juggler.addTween(indicatorFgBitmap, 1.6, Transition.linear);
-    indicatorBgSlide.animate.x.to(indicatorBgBitmap.x + 374);
-    indicatorFgSlide.animate.x.to(indicatorFgBitmap.x + 374);
+      if (indicatorBgSlide != null) return;
+      if (indicatorFgSlide != null) return;
+      indicatorBgSlide = stage.juggler.addTween(indicatorBgBitmap, 1.6, Transition.linear);
+      indicatorFgSlide = stage.juggler.addTween(indicatorFgBitmap, 1.6, Transition.linear);
+      indicatorBgSlide.animate.x.to(indicatorBgBitmap.x + 374);
+      indicatorFgSlide.animate.x.to(indicatorFgBitmap.x + 374);
+      indicatorBgSlide.onComplete = () => indicatorBgSlide = null;
+      indicatorFgSlide.onComplete = () => indicatorFgSlide = null;
+
+      if (e.key == 'v') {
+        indicatorBgSlide = stage.juggler.addTween(indicatorBgBitmap, 0.001, Transition.linear);
+        indicatorFgSlide = stage.juggler.addTween(indicatorBgBitmap, 0.001, Transition.linear);
+        indicatorBgSlide.animate.x.to(indicatorBgBitmap.x);
+        indicatorFgSlide.animate.x.to(indicatorFgBitmap.x);
+
+        //indicatorBgBitmap.(Color.White);
+      }
     }
   });
 
@@ -82,6 +110,25 @@ Slider() {
     */
 
   }
+
+  Sprite sliderIndicator() {
+    indicatorBg.graphics.rectangle(100,100,12,42);
+    indicatorBg.graphics.fillColor(Color.Black);
+    indicatorFg.grapics.rectangle(indicatorBg.x,indicatorBg.y,4,38);
+    indicatorFg.graphics.fillColor(Color.White);
+  }
+
+  Sprite generateTarget(int xpos, int ypos, int width, int height) {
+    target.graphics.rectangle(xpos,ypos,width,height);
+    target.graphics.fillColor(Color.Green);
+
+  }
+
+  void randomTargetLocation() {
+    
+  }
+
+
 }
 
 /*
