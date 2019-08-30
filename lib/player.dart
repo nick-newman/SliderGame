@@ -11,7 +11,7 @@ Player() {
   //resourceManager.addBitmapData("player0", "images/player0@1x.png");
   //resourceManager.addBitmapData("player1", "images/player1@1x.png");
 
-  var player = BitmapData(20, 20, Color.Blue);
+  var player = BitmapData(16, 16, Color.Blue);
   var playerBitmap = Bitmap(player);
   addChild(playerBitmap);
 
@@ -20,21 +20,25 @@ Player() {
   playerBitmap.x = 200;
   playerBitmap.y = 200;
 
-  Tween playerMove;
+  Tween playerMoveUp;
+  Tween playerMoveDown;
+  Tween playerMoveLeft;
+  Tween playerMoveRight;
 
   html.window.onKeyPress.listen((e) {
+    
     if (e.key == 'w') {
-      playerMove = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
-      playerMove.animate.y.to(playerBitmap.y - 1);
+      playerMoveUp = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
+      playerMoveUp.animate.y.to(playerBitmap.y - 5);
     } else if (e.key == 's') {
-      playerMove = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
-      playerMove.animate.y.to(playerBitmap.y + 1);
+      playerMoveDown = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
+      playerMoveDown.animate.y.to(playerBitmap.y + 5);
     } else if (e.key == "a") {
-      playerMove = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
-      playerMove.animate.x.to(playerBitmap.x - 1);
+      playerMoveLeft = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
+      playerMoveLeft.animate.x.to(playerBitmap.x - 5);
     } else if (e.key == "d") {
-      playerMove = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
-      playerMove.animate.x.to(playerBitmap.x + 1);
+      playerMoveRight = stage.juggler.addTween(playerBitmap, 0.01, Transition.linear);
+      playerMoveRight.animate.x.to(playerBitmap.x + 5);
     } 
 
   });
