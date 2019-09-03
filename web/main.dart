@@ -29,27 +29,4 @@ Future<Null> main() async {
   slider.y = 400;
   stage.addChild(slider);
 
-/*
-  var resourceManager = ResourceManager();
-  resourceManager.addBitmapData("player0", "images/player0@1x.png");
-  resourceManager.addBitmapData("player1", "images/player1@1x.png");
-
-  await resourceManager.load();
-
-  var playerData = resourceManager.getBitmapData("player0");
-  var player = Sprite();
-  player.addChild(Bitmap(playerData));
-
-  player.pivotX = playerData.width / 2;
-  player.pivotY = playerData.height / 2;
-  player.scaleX = 1;
-  player.scaleY = 1;
-
-  player.x = 100;
-  player.y = 100;
-
-  stage.addChild(player);
-
-    */
-
 }
