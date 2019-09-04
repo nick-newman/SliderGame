@@ -91,8 +91,8 @@ Slider() {
     int typeValue = 1 + rand.nextInt(99);
 
     if (typeValue <= 40) {
-      //width of 20 to 40
-      customWidth = 20 + rand.nextInt(20);
+      //width of 15 to 35
+      customWidth = 15 + rand.nextInt(20);
       target = Bitmap(BitmapData(customWidth, 38, Color.Green));
 
       target.pivotX = target.width / 2;
@@ -104,7 +104,7 @@ Slider() {
     } else if (typeValue > 40 && typeValue <= 60) {
       //width of 15 to 30
       customWidth = 15 + rand.nextInt(15);
-      target = Bitmap(BitmapData(customWidth, 38, Color.Blue));
+      target = Bitmap(BitmapData(customWidth, 38, Color.BlueViolet));
 
       target.pivotX = target.width / 2;
       target.pivotY = target.height / 2;
@@ -112,13 +112,17 @@ Slider() {
       target.y = sliderBackground.y;
       addChild(target);
 
-      moveTarget = stage.juggler.addTween(target, 4, Transition.linear);
+      moveTarget = stage.juggler.addTween(target, 1.4, Transition.sine);
+      if (typeValue >= 50) {
       moveTarget.animate.x.to(target.x + 70);
+      } else {
+      moveTarget.animate.x.to(target.x - 70);
+      }
 
     } else if (typeValue > 60 && typeValue <= 80) {
       //width of 25 to 40
       customWidth = 25 + rand.nextInt(15);
-      target = Bitmap(BitmapData(customWidth, 38, Color.Red));
+      target = Bitmap(BitmapData(customWidth, 38, Color.Crimson));
 
       target.pivotX = target.width / 2;
       target.pivotY = target.height / 2;
@@ -127,20 +131,34 @@ Slider() {
       addChild(target);
 
       //if (target != null) {
-      moveTarget = stage.juggler.addTween(target, 2, Transition.linear);
-      moveTarget.animate.x.to(target.x - 70);
-      //}
+      moveTarget = stage.juggler.addTween(target, 0.8, Transition.linear);
+      if (typeValue >= 70) {
+      moveTarget.animate.x.to(target.x - 60);
+      moveTarget.onComplete = () {
+      moveTarget = stage.juggler.addTween(target, 0.8, Transition.linear);
+      moveTarget.animate.x.to(target.x + 60);
+      };
+      } else {
+      moveTarget.animate.x.to(target.x + 60);
+      moveTarget.onComplete = () {
+      moveTarget = stage.juggler.addTween(target, 0.8, Transition.linear);
+      moveTarget.animate.x.to(target.x - 60);
+      };
+      }
       
     } else {
-      //width of 5 to 10
-      customWidth = 5 + rand.nextInt(5);
-      target = Bitmap(BitmapData(customWidth, 38, Color.Orange));
+      //width of 10 to 20
+      customWidth = 10 + rand.nextInt(10);
+      target = Bitmap(BitmapData(customWidth, 38, Color.Yellow));
 
       target.pivotX = target.width / 2;
       target.pivotY = target.height / 2;
       target.x = randomX;
       target.y = sliderBackground.y;
-      addChild(target);      
+      addChild(target);
+
+      moveTarget = stage.juggler.addTween(target, 100, Transition.random);
+      moveTarget.animate.x.to(target.x + 5);
     }
 
   }
@@ -166,7 +184,7 @@ Slider() {
 
     if (indicatorOnTarget) {
       //Target hit
-
+      
     } else {
       //Target missed
 
