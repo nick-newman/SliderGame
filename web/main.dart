@@ -4,7 +4,6 @@ import 'dart:html';
 import 'package:stagexl/stagexl.dart';
 import 'dart:math';
 import 'package:fishclicker/slider.dart';
-import 'package:fishclicker/player.dart';
 
 Future<Null> main() async {
   StageOptions options = StageOptions()
@@ -19,14 +18,9 @@ Future<Null> main() async {
   var renderLoop = RenderLoop();
   renderLoop.addStage(stage);
 
-  var player = Player();
-  player.x = stage.width / 2;
-  player.y = 200;
-  stage.addChild(player);
-
   var slider = Slider();
-  slider.x = stage.width / 2;
-  slider.y = 400;
+  slider.x = (stage.width / 2) + 180;
+  slider.y = 300;
   stage.addChild(slider);
 
 }
