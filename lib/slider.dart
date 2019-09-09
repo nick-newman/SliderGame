@@ -21,12 +21,12 @@ Random rand = Random();
 
 Slider() {
 
-  hitText.textColor = Color.White;
+  hitText.textColor = Color.Green;
   hitText.x = 0;
   hitText.y = 80;
   addChild(hitText);
 
-  missText.textColor = Color.White;
+  missText.textColor = Color.Orange;
   missText.x = 0;
   missText.y = 115;
   addChild(missText);
@@ -48,34 +48,15 @@ Slider() {
   generateRandomTarget();
   generateIndicator();
 
-  //On mouse click or press v key, start indicator
   html.window.onMouseDown.listen((e) {
     //Start moving the indicator
     moveIndicatorBackground = stage.juggler.addTween(indicatorBackground, 1.6, Transition.linear);
     moveIndicatorBackground.animate.x.to(indicatorBackground.x + 384);
     moveIndicatorForeground = stage.juggler.addTween(indicatorForeground, 1.6, Transition.linear);
     moveIndicatorForeground.animate.x.to(indicatorForeground.x + 384);
-    //moveIndicatorBackground.onComplete = () => moveIndicatorBackground = null;
-    //moveIndicatorForeground.onComplete = () => moveIndicatorForeground = null;
     indicator();
     looping = true;
   });
-
-  /* RNG debugging
-  html.window.onKeyPress.listen((e) {
-    if (e.key == 'v') {
-      //Start moving the indicator
-      moveIndicatorBackground = stage.juggler.addTween(indicatorBackground, 1.6, Transition.linear);
-      moveIndicatorBackground.animate.x.to(indicatorBackground.x + 384);
-      moveIndicatorForeground = stage.juggler.addTween(indicatorForeground, 1.6, Transition.linear);
-      moveIndicatorForeground.animate.x.to(indicatorForeground.x + 384);
-      //moveIndicatorBackground.onComplete = () => moveIndicatorBackground = null;
-      //moveIndicatorForeground.onComplete = () => moveIndicatorForeground = null;
-      indicator();
-      looping = true;
-    }
-  });
-  */
 
 }
 
@@ -194,20 +175,54 @@ Slider() {
       //Target hit
       hit++;
       hitText.text = ("Hits: " + '$hit');
+      if (hit >= 5 && hit < 10) {
+        hitText.textColor = Color.LimeGreen;
+      } else if (hit >= 10 && hit < 20) {
+        hitText.textColor = Color.Cyan;
+      } else if (hit >= 20) {
+        hitText.textColor = Color.Gold;
+        if (hit == 30) {
+          hitText.scaleX = 1.5;
+          hitText.scaleY = 1.5;
+        } else if (hit == 40) {
+          hitText.scaleX = 2;
+          hitText.scaleY = 2;
+        } else if (hit == 50) {
+          hitText.scaleX = 6;
+          hitText.scaleY = 6;
+          hitText.text = ("Bruh: " + '$hit');
+        }
+      }
       
     } else {
       //Target missed
       miss++;
       missText.text = ("Misses: " + '$miss');
+      if (miss >= 2 && miss < 4) {
+        missText.textColor = Color.OrangeRed;
+      } else if (miss >= 4 && miss < 6) {
+        missText.textColor = Color.Red;
+      } else if (miss >= 6) {
+        missText.text = ("Bruh: " + '$miss');
+        if (miss == 10) {
+          missText.scaleX = 1.5;
+          missText.scaleY = 1.5;
+        } else if (miss == 15) {
+          missText.scaleX = 2;
+          missText.scaleY = 2;
+        } else if (miss == 20) {
+          missText.scaleX = 6;
+          missText.scaleY = 6;
+        }
+      }
 
     }
 
-    //Wait before refreshing indicator
+    //Wait half a second before refreshing indicator
     Timer(Duration(milliseconds: 500), () {
       
     //Delete current target and create a new one
     removeChild(target);
-    //generateTarget(); turn into randomTargetGen
     generateRandomTarget();
 
     //Delete current indicator and create a new one
@@ -219,7 +234,6 @@ Slider() {
     moveIndicatorBackground.animate.x.to(indicatorBackground.x + 384);
     moveIndicatorForeground = stage.juggler.addTween(indicatorForeground, 1.6, Transition.linear);
     moveIndicatorForeground.animate.x.to(indicatorForeground.x + 384);
-
     });
 
   }
