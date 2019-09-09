@@ -21,12 +21,12 @@ Random rand = Random();
 
 Slider() {
 
-  hitText.textColor = Color.Green;
+  hitText.textColor = Color.White;
   hitText.x = 0;
   hitText.y = 80;
   addChild(hitText);
 
-  missText.textColor = Color.Orange;
+  missText.textColor = Color.White;
   missText.x = 0;
   missText.y = 115;
   addChild(missText);
@@ -185,12 +185,9 @@ Slider() {
           hitText.scaleX = 1.5;
           hitText.scaleY = 1.5;
         } else if (hit == 40) {
+          hitText.text = ("Bruh: " + '$hit');
           hitText.scaleX = 2;
           hitText.scaleY = 2;
-        } else if (hit == 50) {
-          hitText.scaleX = 6;
-          hitText.scaleY = 6;
-          hitText.text = ("Bruh: " + '$hit');
         }
       }
       
@@ -199,20 +196,18 @@ Slider() {
       miss++;
       missText.text = ("Misses: " + '$miss');
       if (miss >= 2 && miss < 4) {
-        missText.textColor = Color.OrangeRed;
+        missText.textColor = Color.Orange;
       } else if (miss >= 4 && miss < 6) {
-        missText.textColor = Color.Red;
+        missText.textColor = Color.OrangeRed;
       } else if (miss >= 6) {
-        missText.text = ("Bruh: " + '$miss');
+        missText.textColor = Color.Red;
         if (miss == 10) {
+          missText.text = ("Bruh: " + '$miss');
           missText.scaleX = 1.5;
           missText.scaleY = 1.5;
         } else if (miss == 15) {
           missText.scaleX = 2;
           missText.scaleY = 2;
-        } else if (miss == 20) {
-          missText.scaleX = 6;
-          missText.scaleY = 6;
         }
       }
 
