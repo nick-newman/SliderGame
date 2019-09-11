@@ -6,15 +6,12 @@ import 'dart:math';
 
 class Slider extends DisplayObjectContainer {
 
-var sliderBackground;
-var sliderForeground;
-var target;
-var indicatorBackground;
-var indicatorForeground;
-int hit = 0;
-int miss = 0;
+var sliderBackground, sliderForeground, target, indicatorBackground, indicatorForeground;
+int hit = 0, miss = 0, streak = 0, highestStreak = 0;
 TextField hitText = TextField("Hits: 0", TextFormat("Arial", 18, 0x000000));
 TextField missText = TextField("Misses: 0", TextFormat("Arial", 18, 0x000000));
+TextField streakText = TextField("Streak: 0", TextFormat("Arial", 18, 0x000000));
+TextField highestStreakText = TextField("Highest: 0", TextFormat("Arial", 18, 0x000000));
 bool looping = false;
 Tween moveIndicatorBackground, moveIndicatorForeground;
 Random rand = Random();
@@ -30,6 +27,16 @@ Slider() {
   missText.x = 0;
   missText.y = 115;
   addChild(missText);
+
+  streakText.textColor = Color.White;
+  streakText.x = 300;
+  streakText.y = 80;
+  addChild(streakText);
+
+  highestStreakText.textColor = Color.White;
+  highestStreakText.x = 300;
+  highestStreakText.y = 115;
+  addChild(highestStreakText);
 
   sliderBackground = Bitmap(BitmapData(400, 50, Color.White));
   sliderBackground.pivotX = sliderBackground.width / 2;
@@ -175,43 +182,54 @@ Slider() {
       //Target hit
       hit++;
       hitText.text = ("Hits: " + '$hit');
-      if (hit >= 5 && hit < 10) {
-        hitText.textColor = Color.LimeGreen;
-      } else if (hit >= 10 && hit < 20) {
-        hitText.textColor = Color.Cyan;
-      } else if (hit >= 20) {
-        hitText.textColor = Color.Gold;
-        if (hit == 30) {
-          hitText.scaleX = 1.5;
-          hitText.scaleY = 1.5;
-        } else if (hit == 40) {
-          hitText.text = ("Bruh: " + '$hit');
-          hitText.scaleX = 2;
-          hitText.scaleY = 2;
-        }
-      }
+
+      streak++;
+      streakText.text = ("Streak: " + '$streak');
       
     } else {
       //Target missed
       miss++;
       missText.text = ("Misses: " + '$miss');
-      if (miss >= 2 && miss < 4) {
-        missText.textColor = Color.Orange;
-      } else if (miss >= 4 && miss < 6) {
-        missText.textColor = Color.OrangeRed;
-      } else if (miss >= 6) {
-        missText.textColor = Color.Red;
-        if (miss == 10) {
-          missText.text = ("Bruh: " + '$miss');
-          missText.scaleX = 1.5;
-          missText.scaleY = 1.5;
-        } else if (miss == 15) {
-          missText.scaleX = 2;
-          missText.scaleY = 2;
-        }
-      }
+
+      streak = 0;
+      streakText.text = ("Streak: " + '$streak');
+      streakText.textColor = Color.White;
 
     }
+
+    if (streak > highestStreak) {
+      highestStreak++;
+    }
+
+    highestStreakText.text = ("Highest: " + '$highestStreak');
+
+  if (streak >= 5 && streak < 10) {
+    streakText.textColor = Color.LimeGreen;
+   } else if (streak >= 10 && streak < 20) {
+    streakText.textColor = Color.Cyan;
+   } else if (streak >= 20 && streak < 30) {
+     streakText.textColor = Color.Gold;
+   } else if (streak >= 30 && streak < 40) {
+       streakText.scaleX = 1.25;
+       streakText.scaleY = 1.25;
+   } else if (streak >= 40) {
+       streakText.scaleX = 1.5;
+       streakText.scaleY = 1.5;
+  }
+
+  if (highestStreak >= 5 && highestStreak < 10) {
+    highestStreakText.textColor = Color.LimeGreen;
+   } else if (highestStreak >= 10 && highestStreak < 20) {
+    highestStreakText.textColor = Color.Cyan;
+   } else if (highestStreak >= 20 && highestStreak < 30) {
+     highestStreakText.textColor = Color.Gold;
+   } else if (highestStreak >= 30 && highestStreak < 40) {
+       highestStreakText.scaleX = 1.25;
+       highestStreakText.scaleY = 1.25;
+   } else if (highestStreak >= 40) {
+       highestStreakText.scaleX = 1.5;
+       highestStreakText.scaleY = 1.5;
+  }
 
     //Wait half a second before refreshing indicator
     Timer(Duration(milliseconds: 500), () {
